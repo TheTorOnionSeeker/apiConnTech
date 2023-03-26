@@ -2,13 +2,13 @@ const {User} = require('../db.js');
 // const { Op } = require('sequelize');
 
 const createUser = async (req, res) => {
-    const {name, email, password, telephone,role} = req.body;
+    const {name, email, password, phone,role} = req.body;
     try {
         const new_user = await User.create({
             name:name,
             email:email,
             password:password,
-            phone:telephone
+            phone:phone
         })
         res.status(201).json(new_user);
     } catch (error) {
