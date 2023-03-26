@@ -28,7 +28,19 @@ const verifyUser = async (req, res) => {
     }
 }
 
+async function GetAll(req,res) {
+    try {
+        const DBusers=await User.findAll({
+            attributes:["id","name","email","phone"]
+        })
+        res.status(200).json(DBusers);
+    } catch (error) {
+        res.status(404).json('Users not found!');
+    }
+}
+
 module.exports = {
     createUser,
-    verifyUser
+    verifyUser,
+    GetAll
 };
