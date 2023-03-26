@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/marketplace`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -30,18 +30,27 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Education, Role, Vacant, Job } = sequelize.models;
+const { User, Education, Role, Vacant, Experience, TypeJob } = sequelize.models;
 // Aca vendrian las relaciones
 
-// Un perro tiene unicamente una raza y una raza solo le corresponde a un perro
+// Un usuario tiene unicamente un role y una rol le puede corresponder de 0 a muchos usuarios
 
 User.hasOne(Role);
-Role.belongsTo(User);
 
-// Una raza puede tener de 0 a muchos temperamentos y un temperamento puede tener de 0 a muchas razas.
+Role.hasMany(User);
+User.belongsTo(Role);
 
-Breed.belongsToMany(Temper, {through: 'TemperBreed'});
-Temper.belongsToMany(Breed, {through: 'TemperBreed'});
+// Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
+
+User.belongsToMany(Education, {through: 'EducationUser'});
+Education.belongsToMany(User, {through: 'EducationUser'});
+
+// Una vacante ocupas 1 trabajo y un trabajo ocupas de 0 a muchas vacantes
+
+Experience.hasOne(User);
+Experience.hasOne(TypeJob)
+
+Vacant.hasOne(TypeJob);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

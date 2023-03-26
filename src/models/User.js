@@ -16,6 +16,7 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     phone: {
       type: DataTypes.INTEGER,
@@ -24,10 +25,6 @@ module.exports = (sequelize) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    contracted: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
     }
   });
 };

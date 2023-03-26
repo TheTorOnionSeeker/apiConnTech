@@ -3,23 +3,27 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('job', {
+  sequelize.define('experience', {
     id : {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    hours: {
+    companyName: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    salary: {
-        type: DataTypes.INTEGER,
+    dateBegin: {
+        type: DataTypes.DATE,
         allowNull: false,
     },
-    position: {
-      type: DataTypes.STRING,
+    dateEnd: {
+      type: DataTypes.DATE,
       allowNull: false,
+    },
+    jobActually: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   });
 };
