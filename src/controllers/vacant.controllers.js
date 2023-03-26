@@ -1,5 +1,6 @@
 const {Vacant} = require('../db.js');
 const { Op } = require('sequelize');
+//const { v1: uuidv1 } = require("uuid");
 
 const getVacantById = async (req, res) => {
     const {id} = req.params;
@@ -28,7 +29,7 @@ const getVacantByName = async (req, res) => {
 async function GetAll(req,res) {
     try {
         const DBvacants=await Vacant.findAll({
-            attributes:["id","title", "descripcion","requeriments","description"]
+            attributes:["id","title","requeriments","description"]
         })
         res.status(200).json(DBvacants);
     } catch (error) {
@@ -36,8 +37,27 @@ async function GetAll(req,res) {
     }
 }
 
+async function createVacant(req,res) {
+    try {
+        const { title, requeriments, description} = req.body;
+
+        const newVacant = await Vacant.create({
+            //id: uuidv1(),
+            title: title,
+            requeriments: requeriments,
+            description: description
+        });
+
+        res.status(201).json({vacant:${newVacant}, msg:'Vacant created'});
+
+    } catch (error) {
+        res.status(400).json('Error. Vacants NOT created!');
+    }
+}
+
 module.exports = {
     getVacantByName,
     GetAll,
-    getVacantById
+    getVacantById,
+    createVacant
 };

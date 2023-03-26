@@ -19,10 +19,10 @@ const createUser = async (req, res) => {
             phone : phone,
             password : password
         })
-        if(!new_user) throw new Error('No se pudo crear la raza');
+        if(!new_user) throw new Error('No se pudo crear el usuario');
         await new_user.addRole(role);
-        res.status(201).json({user:new_user, msg:'User created'});
-    } catch (error) {
+        res.status(201).json({user:${new_user}, msg:'User created'});
+        } catch (error) {
         res.status(404).json({error : error.message});
     }
 }
@@ -43,8 +43,20 @@ const verifyUser = async (req, res) => {
     }
 }
 
+async function GetAll(req,res) {
+    try {
+        const DBusers=await User.findAll({
+            attributes:["id","name","email","phone"]
+        })
+        res.status(200).json(DBusers);
+    } catch (error) {
+        res.status(404).json('Users not found!');
+    }
+}
+
 module.exports = {
     createUser,
     verifyUser,
-    getUserById
+    getUserById,
+    GetAll
 };
