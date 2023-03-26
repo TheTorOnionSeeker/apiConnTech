@@ -21,7 +21,7 @@ const createUser = async (req, res) => {
         })
         if(!new_user) throw new Error('No se pudo crear el usuario');
         await new_user.addRole(role);
-        res.status(201).json({user:${new_user}, msg:'User created'});
+        res.status(201).json({user:`${new_user}`, msg:'User created'});
         } catch (error) {
         res.status(404).json({error : error.message});
     }
