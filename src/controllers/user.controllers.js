@@ -4,7 +4,9 @@ const {User} = require('../db.js');
 const createUser = async (req, res) => {
     const {name, email, password, telephone,role} = req.body;
     try {
-        
+        const new_user = await User.create({
+            
+        })
     } catch (error) {
         res.status(404).json({error : error.message});
     }
