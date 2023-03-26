@@ -37,6 +37,7 @@ const { User, Education, Role, Vacant, Experience, Type } = sequelize.models;
 
 User.hasOne(Role);
 Role.belongsTo(User);
+
 Role.hasMany(User);
 User.belongsTo(Role);
 
@@ -50,9 +51,8 @@ Education.belongsToMany(User, {through: 'EducationUser'});
 User.hasOne(Experience);
 Experience.belongsTo(User);
 
-Type.hasOne(Experience);
+Type.hasOne(Experience)
 Experience.belongsTo(Type);
-
 
 Type.hasOne(Vacant);
 Vacant.belongsTo(Type);
