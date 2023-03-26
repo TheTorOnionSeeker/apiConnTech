@@ -1,7 +1,7 @@
 const {Router}=require('express');
 const router=Router();
-const vacantesRouter=require('./vacantesRoutes');
+const vacantsRouter=require('./vacantsRoutes');
 
-router.use('/vacantes', vacantesRouter);
+router.use('/vacant', vacantsRouter);
 
 module.exports = router;
