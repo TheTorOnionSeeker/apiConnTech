@@ -48,7 +48,7 @@ async function createVacant(req,res) {
             description: description
         });
 
-        res.status(201).json({vacant:${newVacant}, msg:'Vacant created'});
+        res.status(201).json({vacant:newVacant, msg:'Vacant created'});
 
     } catch (error) {
         res.status(400).json('Error. Vacants NOT created!');
