@@ -1,6 +1,16 @@
 const {Vacant} = require('../db.js');
 const { Op } = require('sequelize');
 
+const getVacantById = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const vacant = await Vacant.findByPk(id);
+        res.status(201).json({user:vacant, msg:'Vacant found'});
+    } catch (error) {
+        res.status(404).json({error : error.message});
+    }
+}
+
 const getVacantByName = async (req, res) => {
     const {name} = req.params;
     try {
@@ -28,5 +38,6 @@ async function GetAll(req,res) {
 
 module.exports = {
     getVacantByName,
-    GetAll
+    GetAll,
+    getVacantById
 };

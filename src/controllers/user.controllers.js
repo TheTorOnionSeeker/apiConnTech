@@ -1,12 +1,27 @@
 const {User} = require('../db.js');
-// const { Op } = require('sequelize');
+
+const getUserById = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const user = await User.findByPk(id);
+        res.status(201).json({user:user, msg:'User found'});
+    } catch (error) {
+        res.status(404).json({error : error.message});
+    }
+}
 
 const createUser = async (req, res) => {
-    const {name, email, password, telephone,role} = req.body;
+    const {name, email, password, phone, role} = req.body;
     try {
         const new_user = await User.create({
-            
+            name : name,
+            email : email,
+            phone : phone,
+            password : password
         })
+        if(!new_user) throw new Error('No se pudo crear la raza');
+        await new_user.addRole(role);
+        res.status(201).json({user:new_user, msg:'User created'});
     } catch (error) {
         res.status(404).json({error : error.message});
     }
@@ -30,5 +45,6 @@ const verifyUser = async (req, res) => {
 
 module.exports = {
     createUser,
-    verifyUser
+    verifyUser,
+    getUserById
 };
