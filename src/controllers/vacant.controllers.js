@@ -1,7 +1,7 @@
 const {Vacant} = require('../db.js');
 const { Op } = require('sequelize');
 
-const getSpecificVacant = async (req, res) => {
+const getVacantByName = async (req, res) => {
     const {name} = req.params;
     try {
         if(typeof name != 'string')
@@ -16,5 +16,5 @@ const getSpecificVacant = async (req, res) => {
 }
 
 module.exports = {
-    getSpecificVacant
+    getVacantByName
 };
