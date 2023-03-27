@@ -5,19 +5,19 @@ const getVacantById = async (req, res) => {
     const {id} = req.params;
     try {
         const vacant = await Vacant.findByPk(id);
-        res.status(201).json({user:vacant, msg:'Vacant found'});
+        if(vacant === null) throw new Error('Vacant not found');
+        res.status(201).json({vacant:vacant, msg:'Vacant found'});
     } catch (error) {
         res.status(404).json({error : error.message});
     }
 }
 
 const getVacantByName = async (req, res) => {
-    const {name} = req.params;
+    const {title} = req.params;
     try {
-        if(typeof name != 'string')
-            throw new Error('Ingresar un dato tipo string');
+        if(typeof title != 'string') throw new Error('Ingresar un dato tipo string');
         const specifics_name_bd = await Vacant.findAll({
-            where: { name: { [Op.iLike] : `%${name}%`}}
+            where: { title: { [Op.iLike] : `%${title}%`}}
          });
          res.status(200).json(specifics_name_bd);
     } catch (error) {

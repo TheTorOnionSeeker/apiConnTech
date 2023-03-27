@@ -35,10 +35,7 @@ const { User, Education, Role, Vacant, Experience, Type } = sequelize.models;
 
 // Un usuario tiene unicamente un role y una rol le puede corresponder de 0 a muchos usuarios
 
-User.hasOne(Role);
-Role.belongsTo(User);
-
-Role.hasMany(User);
+Role.hasOne(User);
 User.belongsTo(Role);
 
 // Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
