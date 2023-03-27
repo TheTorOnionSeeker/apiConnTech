@@ -5,5 +5,6 @@ const {GetAll ,getVacantByName, getVacantById}=require('../controllers/vacant.co
 router.get('/',GetAll);
 router.get('/name=:title',getVacantByName);
 router.get('/:id',getVacantById);
+router.post('/new', createVacant);
 
 module.exports = router;
