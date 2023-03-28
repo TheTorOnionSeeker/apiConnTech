@@ -10,7 +10,7 @@ const getVacantById = async (req, res) => {
             },
             attributes:["id","title","requeriments","description","typeId"]});
         if (vacant===null) throw new Error('Vacant not found')
-        res.status(201).json({user:vacant, msg:'Vacant found'});
+        res.status(201).json({vacant:vacant, msg:'Vacant found'});
     } catch (error) {
         res.status(404).json({error : error.message});
     }
