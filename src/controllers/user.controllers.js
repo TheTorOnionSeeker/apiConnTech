@@ -46,7 +46,8 @@ const verifyUser = async (req, res) => {
             where: {
                 email : email,
                 password : password
-            }
+            },
+            attributes:["id","name","email","phone","roleId"]
         })
         if(user === null) throw new Error('User not found');
         res.status(201).json({user:user, msg:'User found'});
