@@ -3,6 +3,7 @@ const {User,Role } = require('../db.js');
 const getUserById = async (req, res) => {
     const {id} = req.params;
     try {
+        if(id === null || id.trim().length === 0) throw new Error("Error, inválido en el ID");
         const user = await User.findOne({
             where:{
                 id:id
@@ -19,6 +20,8 @@ const getUserById = async (req, res) => {
 const createUser = async (req, res) => {
     const {name, email, password, phone, role} = req.body;
     try {
+        if(name === '' || email === '' || password === '' || phone === '' || role === '')
+            throw new Error('Error, inválido en los datos');
         const new_user = await User.create({
             name : name,
             email : email,
@@ -42,6 +45,7 @@ const createUser = async (req, res) => {
 const verifyUser = async (req, res) => {
     const {email, password} = req.body;
     try {
+        if(email === '' || password === '') throw new Error('Error, inválido en los datos');
         const user = await User.findOne({
             where: {
                 email : email,

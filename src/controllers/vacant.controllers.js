@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const getVacantById = async (req, res) => {
     const {id} = req.params;
     try {
+        if(id === null || id.trim().length === 0) throw new Error("Error, inválido en el ID");
         const vacant = await Vacant.findOne({
             where:{
                 id:id
@@ -21,6 +22,7 @@ const getVacantByName = async (req, res) => {
     try {
         if(typeof title != 'string')
             throw new Error('Ingresar un dato tipo string');
+        if(title === null || title.trim().length === 0) throw new Error("Error, inválido en el titulo");
         const specifics_name_bd = await Vacant.findAll({
             attributes:["id","title","requeriments","description","typeId"],
             where: { title: { [Op.iLike] : `%${title}%`}}
@@ -45,9 +47,9 @@ async function GetAll(req,res) {
 async function createVacant(req,res) {
     try {
         const { title, requeriments, description, type} = req.body;
-
+        if(title === '' || requeriments === '' || description === '' || type === '') 
+            throw new Error('Error, inválido en los datos');
         const newVacant = await Vacant.create({
-            //id: uuidv1(),
             title: title,
             requeriments: requeriments,
             description: description
@@ -63,7 +65,6 @@ async function createVacant(req,res) {
             nameType : type
         });
         res.status(201).json({vacant:newVacant, msg:'Vacant created'});
-
     } catch (error) {
         res.status(400).json('Error. Vacants NOT created!');
     }
