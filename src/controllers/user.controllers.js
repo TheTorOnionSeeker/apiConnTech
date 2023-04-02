@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
         if(!new_user) throw new Error('No se pudo crear el usuario');
         const role_user = await Role.findOne({
             where: {
-                name : role.name
+                name : role
             }
         })
         if(role_user !== null) await new_user.setRole(role_user);
@@ -59,6 +59,28 @@ const verifyUser = async (req, res) => {
     }
 }
 
+const createUserExternal = async (req, res) => {
+    const {data, role} = req.body;
+    try {
+        if(data.emailVerified === false) throw new Error('Error, usuario no verificado');
+        const new_user = await User.create({
+            name : data.firstName + ' ' + data.lastName,
+            email : data.email
+        })
+        if(!new_user) throw new Error('No se pudo crear el usuario');
+        const role_user = await Role.findOne({
+            where: {
+                name : role
+            }
+        })
+        if(role_user !== null) await new_user.setRole(role_user);
+        else await new_user.createRole(role);
+        res.status(201).json({user:new_user, msg:'User created'});
+    } catch (error) {
+        res.status(404).json({error : error.message});
+    } 
+}
+
 async function GetAll(req,res) {
     try {
         const DBusers=await User.findAll({
@@ -73,6 +95,7 @@ async function GetAll(req,res) {
 module.exports = {
     createUser,
     verifyUser,
+    createUserExternal,
     getUserById,
     GetAll
 };

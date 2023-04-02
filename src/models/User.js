@@ -19,12 +19,10 @@ module.exports = (sequelize) => {
       unique: true,
     },
     phone: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     }
   });
 };
