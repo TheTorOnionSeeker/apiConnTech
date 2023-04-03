@@ -16,15 +16,11 @@ function ordenarObjetos(propiedad, sentido, funcionOrdenamiento) {
 }
 
 const sortRole = async (req, res) => {
-    const {array, name} = req.body;
+    const {array, nameRole} = req.body;
     try {
-        const role = await Role.findOne({
-            where: {
-                name : name
-            },
-            attributes:["name"]
-        })
-        if(role === null) throw new Error('Role not found');
+        array.map((user) => {
+           console.log(user.getRole()) 
+        });
     } catch (error) {
         res.status(404).json({error : error.message})
     }

@@ -35,7 +35,9 @@ const createUser = async (req, res) => {
             }
         })
         if(role_user !== null) await new_user.setRole(role_user);
-        else await new_user.createRole(role);
+        else await new_user.createRole({
+            name : role
+        });
         res.status(201).json({user:new_user, msg:'User created'});
         } catch (error) {
         res.status(404).json({error : error.message});
