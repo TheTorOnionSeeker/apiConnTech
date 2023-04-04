@@ -32,10 +32,25 @@ const getVacantByName = async (req, res) => {
     }
 }
 
+async function GetVacantsByUserId(req,res){
+    const {id}=req.body;
+    try {
+        const DBvacantsByUserId=await Vacant.findAll({
+            attributes:["id","title","requeriments","description","typeId", "userId"],
+            where:{
+                userId:id
+            }
+        });
+        res.status(200).json(DBvacantsByUserId);
+    } catch (error) {
+        res.status(404).json('Vacants not found!');
+    }
+}
+
 async function GetAll(req,res) {
     try {
         const DBvacants=await Vacant.findAll({
-            attributes:["id","title","requeriments","description","typeId"]
+            attributes:["id","title","requeriments","description","typeId", "userId"]
         })
         res.status(200).json(DBvacants);
     } catch (error) {
@@ -75,5 +90,6 @@ module.exports = {
     getVacantByName,
     GetAll,
     getVacantById,
+    GetVacantsByUserId,
     createVacant
 };
