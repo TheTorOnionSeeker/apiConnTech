@@ -36,7 +36,7 @@ const getVacantByName = async (req, res) => {
 async function GetAll(req,res) {
     try {
         const DBvacants=await Vacant.findAll({
-            attributes:["id","title","requeriments","description","typeId","userId"]
+            //attributes:["id","title","requeriments","description","typeId","userId"]
         })
         res.status(200).json(DBvacants);
     } catch (error) {
