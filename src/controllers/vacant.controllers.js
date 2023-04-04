@@ -70,9 +70,9 @@ async function createVacant(req,res) {
             }
         });
         if(user_Id !== null) await newVacant.setUser(user_Id);
-        else await newVacant.createUser({
+        /* else await newVacant.createUser({
             id : userId
-        });
+        }); */
         res.status(201).json({vacant:newVacant, msg:'Vacant created'});
 
     } catch (error) {
