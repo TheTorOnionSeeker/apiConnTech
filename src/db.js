@@ -38,11 +38,6 @@ const { User, Education, Role, Vacant, Experience, Type } = sequelize.models;
 Role.hasOne(User);
 User.belongsTo(Role);
 
-Type.hasOne(Vacant);
-Vacant.belongsTo(Type);
-/* User.hasOne(Vacant);
-Vacant.belongsTo(User); */
-
 // Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
 
 User.belongsToMany(Education, {through: 'EducationUser'});
@@ -55,6 +50,9 @@ Experience.belongsTo(User);
 
 Type.hasOne(Experience)
 Experience.belongsTo(Type);
+
+Type.hasOne(Vacant);
+Vacant.belongsTo(Type);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
