@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     userId:{
-      type: DataTypes.STRING,
+      type: DataTypes.NUMBER,
       allowNull: false,
     }
   });
