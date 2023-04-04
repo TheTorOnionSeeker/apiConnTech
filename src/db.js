@@ -40,8 +40,8 @@ User.belongsTo(Role);
 
 Type.hasOne(Vacant);
 Vacant.belongsTo(Type);
-User.hasOne(Vacant);
-Vacant.belongsTo(User);
+Vacant.hasOne(User);
+User.belongsTo(Vacant);
 
 // Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
 
