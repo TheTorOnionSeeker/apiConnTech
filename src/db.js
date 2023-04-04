@@ -38,6 +38,9 @@ const { User, Education, Role, Vacant, Experience, Type } = sequelize.models;
 Role.hasOne(User);
 User.belongsTo(Role);
 
+User.hasOne(Vacant);
+Vacant.belongsTo(User);
+
 // Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
 
 User.belongsToMany(Education, {through: 'EducationUser'});

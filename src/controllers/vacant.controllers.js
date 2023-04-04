@@ -1,5 +1,6 @@
 const {Vacant, Type} = require('../db.js');
 const { Op } = require('sequelize');
+const User = require('../models/User.js');
 //const { v1: uuidv1 } = require("uuid");
 
 const getVacantById = async (req, res) => {
@@ -35,7 +36,7 @@ const getVacantByName = async (req, res) => {
 async function GetAll(req,res) {
     try {
         const DBvacants=await Vacant.findAll({
-            attributes:["id","title","requeriments","description","typeId"]
+            attributes:["id","title","requeriments","description","typeId","userId"]
         })
         res.status(200).json(DBvacants);
     } catch (error) {
@@ -45,7 +46,7 @@ async function GetAll(req,res) {
 
 async function createVacant(req,res) {
     try {
-        const { title, requeriments, description, type} = req.body;
+        const { title, requeriments, description, type, userId} = req.body;
 
         const newVacant = await Vacant.create({
             //id: uuidv1(),
@@ -62,6 +63,15 @@ async function createVacant(req,res) {
         if(type_job !== null) await newVacant.setType(type_job);
         else await newVacant.createType({
             nameType : type
+        });
+        const user_Id = await User.findOne({
+            where: {
+                id : userId
+            }
+        });
+        if(user_Id !== null) await newVacant.setUser(user_Id);
+        else await newVacant.createUser({
+            id : userId
         });
         res.status(201).json({vacant:newVacant, msg:'Vacant created'});
 
