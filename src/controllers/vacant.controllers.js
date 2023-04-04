@@ -36,7 +36,7 @@ const getVacantByName = async (req, res) => {
 async function GetAll(req,res) {
     try {
         const DBvacants=await Vacant.findAll({
-            //attributes:["id","title","requeriments","description","typeId","userId"]
+            attributes:["id","title","requeriments","description","typeId","userId"]
         })
         res.status(200).json(DBvacants);
     } catch (error) {
@@ -52,7 +52,8 @@ async function createVacant(req,res) {
             //id: uuidv1(),
             title: title,
             requeriments: requeriments,
-            description: description
+            description: description,
+            userId:userId
         });
         if(!newVacant) throw new Error('Vacant NOT created');
         const type_job = await Type.findOne({
@@ -64,7 +65,7 @@ async function createVacant(req,res) {
         else await newVacant.createType({
             nameType : type
         });
-        const user_Id = await User.findOne({
+        /* const user_Id = await User.findOne({
             where: {
                 id : userId
             }
@@ -72,7 +73,7 @@ async function createVacant(req,res) {
         if(user_Id !== null) await newVacant.setUser(user_Id);
         else await newVacant.createUser({
             id : userId
-        });
+        }); */
         res.status(201).json({vacant:newVacant, msg:'Vacant created'});
 
     } catch (error) {

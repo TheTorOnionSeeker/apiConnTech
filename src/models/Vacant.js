@@ -20,6 +20,9 @@ module.exports = (sequelize) => {
     description: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    userId:{
+      type: DataTypes.INTEGER,
     }
   });
 };
