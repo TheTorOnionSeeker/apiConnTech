@@ -21,9 +21,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userId:{
+    /* userId:{
       type: DataTypes.NUMBER,
       allowNull: false,
-    }
+    } */
   });
 };
