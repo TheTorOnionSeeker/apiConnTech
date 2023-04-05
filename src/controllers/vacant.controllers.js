@@ -35,11 +35,11 @@ const getVacantByName = async (req, res) => {
 async function GetVacantsByUserId(req,res){
     const {id}=req.body;
     try {
-        const DBvacantsByUserId=await Vacant.findAll({
-            attributes:["id","title","requeriments","description","typeId", "userId"],
+        const DBvacantsByUserId=await Vacant.findOne({
             where:{
                 userId:id
-            }
+            },
+            attributes:["id","title","requeriments","description","typeId", "userId"]
         });
         res.status(200).json(DBvacantsByUserId);
     } catch (error) {
