@@ -6,6 +6,6 @@ router.get('/',GetAll);
 router.get('/name=:title',getVacantByName);
 router.get('/:id',getVacantById);
 router.post('/new', createVacant);
-router.post('/vacantsbyuser',GetVacantsByUserId)
+router.get('/vacantsbyuser/:id',GetVacantsByUserId)
 
 module.exports = router;

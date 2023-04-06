@@ -33,9 +33,9 @@ const getVacantByName = async (req, res) => {
 }
 
 async function GetVacantsByUserId(req,res){
-    const {id}=req.body;
+    const {id} = req.params;
     try {
-        const DBvacantsByUserId=await Vacant.findOne({
+        const DBvacantsByUserId=await Vacant.findAll({
             where:{
                 userId:id
             },
