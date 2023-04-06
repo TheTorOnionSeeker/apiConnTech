@@ -17,7 +17,7 @@ const getUserById = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-    const {name, email, password, phone, roleId} = req.body;
+    const {name, email, password, phone, role} = req.body;
     try {
         const new_user = await User.create({
             name : name,
@@ -28,11 +28,11 @@ const createUser = async (req, res) => {
         if(!new_user) throw new Error('No se pudo crear el usuario');
         const role_user = await Role.findOne({
             where: {
-                name : roleId
+                name : role.name
             }
         })
         if(role_user !== null) await new_user.setRole(role_user);
-        else await new_user.createRole({name:roleId});
+        else await new_user.createRole(role);
         res.status(201).json({user:new_user, msg:'User created'});
         } catch (error) {
         res.status(404).json({error : error.message});
