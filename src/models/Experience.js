@@ -10,15 +10,15 @@ module.exports = (sequelize) => {
       autoIncrement: true
     },
     companyName: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     dateBegin: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     dateEnd: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     jobActually: {
