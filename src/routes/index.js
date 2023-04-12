@@ -5,5 +5,6 @@ const usersRouter = require('./usersRoutes');
 
 router.use('/vacant', vacantsRouter);
 router.use('/user', usersRouter);
+router.use('/premium', premiumRouter);
 
 module.exports = router;
