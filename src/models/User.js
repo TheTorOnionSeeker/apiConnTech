@@ -27,10 +27,12 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     education:{
-      type:DataTypes.ARRAY
+      type:DataTypes.ARRAY,
+      allowNull: true,
     },
     experience:{
-      type:DataTypes.ARRAY
+      type:DataTypes.ARRAY,
+      allowNull: true,
     }
   });
 };
