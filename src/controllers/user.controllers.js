@@ -67,9 +67,28 @@ async function GetAll(req,res) {
     }
 }
 
+const modifyUser=async (req,res)=>{
+    let {id, educacion, experiencia}=req.body;
+    try {
+        const user = await User.findOne({
+            where: {
+                id : id
+            },
+            attributes:["id","name","email","phone","roleId"]
+        })
+        if(user === null) throw new Error('User not found');
+        user.education=educacion;
+        user.experiencie=experiencia;
+        res.status(201).json({user:user, msg:'User found'});
+    } catch (error) {
+        res.status(404).json({error : error.message});
+    }
+}
+
 module.exports = {
     createUser,
     verifyUser,
     getUserById,
-    GetAll
+    GetAll,
+    modifyUser
 };

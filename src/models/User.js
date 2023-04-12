@@ -25,6 +25,12 @@ module.exports = (sequelize) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    education:{
+      type:DataTypes.ARRAY
+    },
+    experience:{
+      type:DataTypes.ARRAY
     }
   });
 };
