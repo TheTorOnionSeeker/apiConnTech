@@ -74,7 +74,7 @@ const modifyUser=async (req,res)=>{
             where: {
                 id : id
             },
-            attributes:["id","name","email","phone","roleId","education","education"]
+            attributes:["id","name","email","phone","roleId","education","experiencie"]
         })
         if(user === null) throw new Error('User not found');
         user.education=educacion;
