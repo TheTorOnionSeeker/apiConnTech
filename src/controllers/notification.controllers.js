@@ -21,7 +21,7 @@ const getNotificationByUserId = async (req, res) => {
             where:{
                 userId:id
             },
-            attributes:["description"]
+            attributes:["description","id"]
         });
         if (notification===null) throw new Error('Notification not found');
         res.status(200).json({notification:notification, msg:'Notification found'});
