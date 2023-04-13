@@ -68,7 +68,7 @@ async function GetAll(req,res) {
 }
 
 const modifyUser=async (req,res)=>{
-    let {id, educacion, experiencia}=req.body;
+    const {id, educacion, experiencia}=req.body;
     try {
         const user = await User.findOne({
             where: {
