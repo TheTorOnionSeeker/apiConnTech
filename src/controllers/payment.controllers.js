@@ -7,7 +7,7 @@ const PaymentIntent=async ()=>{
             currency: 'usd',
             automatic_payment_methods: {enabled: true},
           });
-        res.status(200).json({clientSecret: paymentIntent.client_secret});
+        res.status(201).json({clientSecret: paymentIntent.client_secret});
     } catch (error) {
         res.status(400).json({message: error.message})
     }

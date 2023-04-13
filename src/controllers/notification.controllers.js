@@ -29,3 +29,8 @@ const getNotificationByUserId = async (req, res) => {
         res.status(404).json({error : error.message});
     }
 }
+
+module.exports = {
+    createNotification,
+    getNotificationByUserId
+};
