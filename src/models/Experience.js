@@ -19,14 +19,14 @@ module.exports = (sequelize) => {
     },
     dateBegin: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     dateEnd: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     jobActually: {
-      type: DataTypes.STRING,
+      type: DataTypes.BOOLEAN,
       allowNull: false
     }
   });
