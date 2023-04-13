@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     jobActually: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       allowNull: false
     }
   });
