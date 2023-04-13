@@ -45,8 +45,11 @@ Education.belongsToMany(User, {through: 'EducationUser'});
 
 // Una vacante ocupas 1 trabajo y un trabajo ocupas de 0 a muchas vacantes
 
-User.hasOne(Experience);
-Experience.belongsTo(User);
+Experience.hasOne(User);
+User.belongsTo(Experience);
+
+Education.hasOne(User);
+User.belongsTo(Education);
 
 Type.hasOne(Experience)
 Experience.belongsTo(Type);

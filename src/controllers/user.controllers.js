@@ -1,4 +1,4 @@
-const {User,Role } = require('../db.js');
+const {User,Role,Education,Experience } = require('../db.js');
 
 const getUserById = async (req, res) => {
     const {id} = req.params;
@@ -74,14 +74,28 @@ const modifyUser=async (req,res)=>{
             where: {
                 id : id
             },
-            attributes:["id","name","email","phone","roleId","education","experiencie"]
+            attributes:["id","name","email","phone","roleId"]
         })
         if(user === null) throw new Error('User not found');
-        user.education=educacion;
-        user.experiencie=experiencia;
-        res.status(201).json({user:user, msg:'User found'});
+        const educacion_user = await Education.findOne({
+            where: {
+                name : educacion.name
+            }
+        })
+        if(educacion_user !== null) await user.setEducation(educacion);
+        else await user.createEducation(educacion);
+
+        const experiencia_user = await Experience.findOne({
+            where: {
+                name : experiencia.name
+            }
+        })
+        if(experiencia_user !== null) await user.setExperience(experiencia);
+        else await user.createExperience(experiencia);
+
+        res.status(201).json({user:user, msg:'User updated'});
     } catch (error) {
-        res.status(404).json({error : error.message});
+        res.status(400).json({error : error.message});
     }
 }
 
