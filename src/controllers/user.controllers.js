@@ -59,7 +59,7 @@ const verifyUser = async (req, res) => {
 async function GetAll(req,res) {
     try {
         const DBusers=await User.findAll({
-            attributes:["id","name","email","phone","roleId","experienceId"]
+            attributes:["id","name","email","phone","roleId","experienceId","educationId"]
         })
         res.status(200).json(DBusers);
     } catch (error) {
