@@ -40,8 +40,8 @@ User.belongsTo(Role);
 
 // Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
 
-User.belongsToMany(Education, {through: 'EducationUser'});
-Education.belongsToMany(User, {through: 'EducationUser'});
+/* User.belongsToMany(Education, {through: 'EducationUser'});
+Education.belongsToMany(User, {through: 'EducationUser'}); */
 
 // Una vacante ocupas 1 trabajo y un trabajo ocupas de 0 a muchas vacantes
 
