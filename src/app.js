@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const cors=require('cors');
 const routes = require('./routes/index.js');
 
+const stripe = require('stripe')('sk_test_51Mwy6OIafxu5FBCfUflrOLZaYawloNP6Js3S76LYjloojg9K5qjMIA51Z9lowfW7IZdOcCTK9DRgvZEwtJW5Q9nY00Zca3Y2fw');
+
 require('./db.js');
 
 const server = express();
