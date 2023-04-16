@@ -15,7 +15,7 @@ server.name = 'API';
 
 server.use(express.static('public'));
 
-const YOUR_DOMAIN = 'https://api-conntech.onrender.com';
+const YOUR_DOMAIN = 'http://localhost:5173/premium';
 
 server.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
