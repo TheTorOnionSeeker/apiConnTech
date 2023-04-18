@@ -1,10 +1,10 @@
-import { createTransport } from 'nodemailer';
+const nodemailer = require('nodemailer');
 
 const sendEmail = (email, subject, message) => {
 
 
     // Configurar transporte
-    const transporter = createTransport({
+    const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
@@ -31,6 +31,6 @@ const sendEmail = (email, subject, message) => {
     });
   }
 
-  export default {
+  module.exports = {
     sendEmail
 };
