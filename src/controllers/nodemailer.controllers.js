@@ -1,36 +1,32 @@
 const nodemailer = require('nodemailer');
 
-const sendEmail = (email, subject, message) => {
+    async function sendEmail(email, subject, message) {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'nicoyabichino@gmail.com',
+            pass: 'nxjpkaptjlocketi'
+        }
+      });
 
+      const mailOptions = {
+        from: 'nicoyabichino@gmail.com',
+        to: email,
+        subject: subject,
+        text: message
+      };
 
-    // Configurar transporte
-    const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: 'nicoyabichino@gmail.com',
-        pass: 'nxjpkaptjlocketi'
-    }
-    });
-
-
-    const mailOptions = {
-      from: 'nicoyabichino@gmail.com',
-      to: email,
-      subject: subject,
-      text: message
-    };
-  
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
+      try {
+        const info = await transporter.sendMail(mailOptions);
         console.log('Email enviado: ' + info.response);
+      } catch (error) {
+        console.log(error);
+        throw new Error('No se pudo enviar el correo electrónico');
       }
-    });
-  }
+    }
 
-  module.exports = {
-    sendEmail
-};
+    module.exports = {
+      sendEmail
+    };
