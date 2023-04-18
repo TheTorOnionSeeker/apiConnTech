@@ -65,7 +65,7 @@ const verifyUser = async (req, res) => {
 
     //se envía token de autenticación creado, con expiración de 15 min, y datos de creación
     const tokenPayload = { userId: user.id, createdAt: Date.now() };
-    const tokenOptions = { expiresIn: "15min" };
+    const tokenOptions = { expiresIn: "1h" };
     const token = jwt.sign(tokenPayload, tokenOptions, hashedToken);
 
     res.status(201).json({ user: user, token: token, msg: "User found" });
