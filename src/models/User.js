@@ -25,6 +25,10 @@ module.exports = (sequelize) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    isPremium:{
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     }
   });
 };

@@ -30,7 +30,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Education, Role, Vacant, Experience, Type } = sequelize.models;
+const { User, Education, Role, Vacant, Experience, Type, Postulation } = sequelize.models;
 // Aca vendrian las relaciones
 
 // Un usuario tiene unicamente un role y una rol le puede corresponder de 0 a muchos usuarios
@@ -40,13 +40,16 @@ User.belongsTo(Role);
 
 // Un usuario posee a 0 o más estudios y una estudio posee de 0 a muchos usuarios
 
-User.belongsToMany(Education, {through: 'EducationUser'});
-Education.belongsToMany(User, {through: 'EducationUser'});
+/* User.belongsToMany(Education, {through: 'EducationUser'});
+Education.belongsToMany(User, {through: 'EducationUser'}); */
 
 // Una vacante ocupas 1 trabajo y un trabajo ocupas de 0 a muchas vacantes
 
-User.hasOne(Experience);
-Experience.belongsTo(User);
+Experience.hasOne(User);
+User.belongsTo(Experience);
+
+Education.hasOne(User);
+User.belongsTo(Education);
 
 Type.hasOne(Experience)
 Experience.belongsTo(Type);
