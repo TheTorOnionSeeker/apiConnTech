@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const tokenSecret = process.env.CRYPTED_TOKEN;
 
+
 const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
