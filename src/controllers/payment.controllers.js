@@ -1,4 +1,5 @@
 const stripe = require('stripe')('sk_test_CGGvfNiIPwLXiDwaOfZ3oX6Y');
+const { User } = require("../db.js");
 
 const PaymentIntent=async ()=>{
     try {
@@ -13,6 +14,24 @@ const PaymentIntent=async ()=>{
     }
 }
 
+const setPremium=async ()=>{
+    const {id}=req.body;
+    try {
+        const user = await User.findOne({
+            where: {
+                id : id
+            },
+            attributes:["id","name","email","phone","roleId","experienceId","educationId","isPremium"]
+        })
+        if(user.isPremium === true) throw new Error('User is already premium!');
+        user.isPremium=true;
+        res.status(201).json({user:user, msg:'Premium updated'});
+    } catch (error) {
+        res.status(400).json({error : error.message});
+    }
+}
+
 module.exports={
-    PaymentIntent
+    PaymentIntent,
+    setPremium
 }
