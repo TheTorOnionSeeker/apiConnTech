@@ -68,7 +68,7 @@ const verifyUser = async (req, res) => {
     const tokenOptions = { expiresIn: "1h" };
     const token = jwt.sign(tokenPayload, tokenOptions, hashedToken);
 
-    res.status(201).json({ user: user, msg: "User found" });
+    res.status(201).json({ user: user,token:token, msg: "User found" });
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
