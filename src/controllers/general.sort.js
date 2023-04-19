@@ -18,9 +18,10 @@ function ordenarObjetos(propiedad, sentido, funcionOrdenamiento) {
 const sortRole = async (req, res) => {
     const {array, nameRole} = req.body;
     try {
-        array.map((user) => {
-           console.log(user.getRole()) 
-        });
+        array.map(async (user) => {
+            const role = await Role.findByPk(user.roleId);
+            console.log(role);
+        })
     } catch (error) {
         res.status(404).json({error : error.message})
     }

@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    premium : {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
 };
