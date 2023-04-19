@@ -1,4 +1,4 @@
-const { User, Role } = require("../db.js");
+const { User, Role, Education, Experience } = require("../db.js");
 // const jwt = require("jsonwebtoken");
 // const crypto = require("crypto");
 // const tokenSecret = process.env.CRYPTED_TOKEN;
