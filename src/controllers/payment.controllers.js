@@ -1,4 +1,5 @@
 const stripe = require('stripe')('sk_test_CGGvfNiIPwLXiDwaOfZ3oX6Y');
+const { User } = require("../db.js");
 
 const PaymentIntent=async ()=>{
     try {
