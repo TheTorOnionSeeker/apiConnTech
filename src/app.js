@@ -42,7 +42,7 @@ server.post("/create-checkout-session/:id", async (req, res) => {
     attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
   });
 
-  res.redirect(303, session.url).json(user);
+  res.redirect(303, session.url).json({user:user});
 });
 
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
