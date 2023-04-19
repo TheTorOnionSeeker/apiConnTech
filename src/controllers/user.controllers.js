@@ -1,7 +1,7 @@
 const { User, Role, Education, Experience } = require("../db.js");
-// const jwt = require("jsonwebtoken");
-// const crypto = require("crypto");
-// const tokenSecret = process.env.CRYPTED_TOKEN;
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const tokenSecret = process.env.CRYPTED_TOKEN;
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -45,7 +45,7 @@ const createUser = async (req, res) => {
 const verifyUser = async (req, res) => {
   const { email, password } = req.body;
 
-  // creación de código único encriptado
+  //creación de código único encriptado
   const tokenBytes = crypto.randomBytes(32);
   const tokenSecurity = tokenBytes.toString("hex");
   const hashedToken = crypto
@@ -63,7 +63,7 @@ const verifyUser = async (req, res) => {
     });
     if (!user) throw new Error("User not found");
 
-    // se envía token de autenticación creado, con expiración de 15 min, y datos de creación
+    //se envía token de autenticación creado, con expiración de 15 min, y datos de creación
     const tokenPayload = { userId: user.id, createdAt: Date.now() };
     const tokenOptions = { expiresIn: "1h" };
     const token = jwt.sign(tokenPayload, tokenOptions, hashedToken);
