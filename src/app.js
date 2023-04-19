@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes/index.js");
-const { User } = require("./db.js");
 
 const stripe = require("stripe")(
   "sk_test_51Mwy6OIafxu5FBCfUflrOLZaYawloNP6Js3S76LYjloojg9K5qjMIA51Z9lowfW7IZdOcCTK9DRgvZEwtJW5Q9nY00Zca3Y2fw"
@@ -20,8 +19,7 @@ server.use(express.static("public"));
 
 const YOUR_DOMAIN = "http://localhost:5173/premium";
 
-server.post("/create-checkout-session/:id", async (req, res) => {
-  const {id}=req.params;
+server.post("/create-checkout-session/", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -35,14 +33,7 @@ server.post("/create-checkout-session/:id", async (req, res) => {
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
 
-  const user = await User.findOne({
-    where: {
-      id: id,
-    },
-    attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
-  });
-
-  res.redirect(303, session.url).json({user:user});
+  res.redirect(303, session.url);
 });
 
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
