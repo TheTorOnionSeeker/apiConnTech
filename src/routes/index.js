@@ -12,6 +12,6 @@ router.use('/user', usersRouter);
 router.use('/premium', premiumRouter);
 router.use('/postulation', postulationRouter);
 router.use('/notification', notificationRouter);
-router.use('/sendmail', sendmailRouter);
+router.use('/send-email', sendmailRouter);
 
 module.exports = router;
