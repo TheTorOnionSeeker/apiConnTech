@@ -10,7 +10,7 @@ const getUserById = async (req, res) => {
       where: {
         id: id,
       },
-      attributes: ["id", "name", "email", "phone", "roleId"],
+      attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
     });
     if (user === null) throw new Error("User not found");
     res.status(201).json({ user: user, msg: "User found" });
@@ -59,7 +59,7 @@ const verifyUser = async (req, res) => {
         email: email,
         password: password,
       },
-      attributes: ["id", "name", "email", "phone", "roleId"],
+      attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
     });
     if (!user) throw new Error("User not found");
 
@@ -96,7 +96,7 @@ async function verifyToken(req, res, next) {
 async function GetAll(req, res) {
   try {
     const DBusers = await User.findAll({
-      attributes: ["id", "name", "email", "phone", "roleId"],
+      attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
     });
     res.status(200).json(DBusers);
   } catch (error) {
@@ -111,7 +111,7 @@ const modifyUser=async (req,res)=>{
             where: {
                 id : id
             },
-            attributes:["id","name","email","phone","roleId","experienceId","educationId"]
+            attributes:["id","name","email","phone","isPremium","roleId","experienceId","educationId"]
         })
         if(user === null) throw new Error('User not found');
         const educacion_user = await Education.findOne({
