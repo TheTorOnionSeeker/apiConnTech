@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 
-async function sendEmail() {
+async function sendEmail(req,res) {
 
+    const {email}=req.body;
 
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -15,7 +16,7 @@ async function sendEmail() {
 
     const mailOptions = {
         from: "Conntech",
-        to: "nicoyabichino@gmail.com",
+        to: email,
         subject: "enviado desde Conntech Inc.",
         text: "Registro exitoso, !Bienvenido a Conntech!",
     }
