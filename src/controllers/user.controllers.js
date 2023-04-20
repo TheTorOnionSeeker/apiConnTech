@@ -1,8 +1,7 @@
 const { User, Role, Education, Experience } = require("../db.js");
-//const jwt = require("jsonwebtoken");
-//const crypto = require("crypto");
-//const tokenSecret = process.env.CRYPTED_TOKEN;
-
+// const jwt = require("jsonwebtoken");
+// const crypto = require("crypto");
+// const {CRYPTED_TOKEN} = process.env;
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -11,7 +10,16 @@ const getUserById = async (req, res) => {
       where: {
         id: id,
       },
-      attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "phone",
+        "isPremium",
+        "roleId",
+        "experienceId",
+        "educationId",
+      ],
     });
     if (user === null) throw new Error("User not found");
     res.status(201).json({ user: user, msg: "User found" });
@@ -47,12 +55,12 @@ const verifyUser = async (req, res) => {
   const { email, password } = req.body;
 
   //creación de código único encriptado
-  /* const tokenBytes = crypto.randomBytes(32);
-  const tokenSecurity = tokenBytes.toString("hex");
-  const hashedToken = crypto
-    .createHmac("sha256", tokenSecret)
-    .update(tokenSecurity)
-    .digest("hex"); */
+  // const tokenBytes = crypto.randomBytes(32);
+  // const tokenSecurity = tokenBytes.toString("hex");
+  // const hashedToken = crypto
+  //   .createHmac("sha256", CRYPTED_TOKEN)
+  //   .update(tokenSecurity)
+  //   .digest("hex");
 
   try {
     const user = await User.findOne({
@@ -60,14 +68,23 @@ const verifyUser = async (req, res) => {
         email: email,
         password: password,
       },
-      attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "phone",
+        "isPremium",
+        "roleId",
+        "experienceId",
+        "educationId",
+      ],
     });
     if (!user) throw new Error("User not found");
 
     //se envía token de autenticación creado, con expiración de 15 min, y datos de creación
-    /* const tokenPayload = { userId: user.id, createdAt: Date.now() };
-    const tokenOptions = { expiresIn: "1h" };
-    const token = jwt.sign(tokenPayload, tokenOptions, hashedToken); */
+    // const tokenPayload = { userId: user.id, createdAt: Date.now() };
+    // const tokenOptions = { expiresIn: "1h" };
+    // const token = jwt.sign(tokenPayload, tokenOptions, hashedToken);
 
     res.status(201).json({ user: user, msg: "User found" });
   } catch (error) {
@@ -90,14 +107,23 @@ async function verifyToken(req, res, next) {
       });
     }
   } catch {
-    res.sendStatus(401)
+    res.sendStatus(401);
   }
 }
 
 async function GetAll(req, res) {
   try {
     const DBusers = await User.findAll({
-      attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "phone",
+        "isPremium",
+        "roleId",
+        "experienceId",
+        "educationId",
+      ],
     });
     res.status(200).json(DBusers);
   } catch (error) {
@@ -105,37 +131,46 @@ async function GetAll(req, res) {
   }
 }
 
-const modifyUser=async (req,res)=>{
-    const {id, educacion, experiencia}=req.body;
-    try {
-        const user = await User.findOne({
-            where: {
-                id : id
-            },
-            attributes:["id","name","email","phone","isPremium","roleId","experienceId","educationId"]
-        })
-        if(user === null) throw new Error('User not found');
-        const educacion_user = await Education.findOne({
-            where: {
-                name : educacion.name
-            }
-        })
-        if(educacion_user !== null) await user.setEducation(educacion);
-        else await user.createEducation(educacion);
+const modifyUser = async (req, res) => {
+  const { id, educacion, experiencia } = req.body;
+  try {
+    const user = await User.findOne({
+      where: {
+        id: id,
+      },
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "phone",
+        "isPremium",
+        "roleId",
+        "experienceId",
+        "educationId",
+      ],
+    });
+    if (user === null) throw new Error("User not found");
+    const educacion_user = await Education.findOne({
+      where: {
+        name: educacion.name,
+      },
+    });
+    if (educacion_user !== null) await user.setEducation(educacion);
+    else await user.createEducation(educacion);
 
-        const experiencia_user = await Experience.findOne({
-            where: {
-                name : experiencia.name
-            }
-        })
-        if(experiencia_user !== null) await user.setExperience(experiencia);
-        else await user.createExperience(experiencia);
+    const experiencia_user = await Experience.findOne({
+      where: {
+        name: experiencia.name,
+      },
+    });
+    if (experiencia_user !== null) await user.setExperience(experiencia);
+    else await user.createExperience(experiencia);
 
-        res.status(201).json({user:user, msg:'User updated'});
-    } catch (error) {
-        res.status(400).json({error : error.message});
-    }
-}
+    res.status(201).json({ user: user, msg: "User updated" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   createUser,
