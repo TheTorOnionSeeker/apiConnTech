@@ -120,7 +120,7 @@ async function verifyToken(req, res, next) {
           res.sendStatus(403);
         } else {
           req.authData = authData;
-          next();
+          res.status(201).send("Verificación de token exitosa");
         }
       });
     }
