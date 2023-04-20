@@ -28,6 +28,31 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getUserByName = async (req, res) => {
+  const { name } = req.params;
+  try {
+    const user = await User.findOne({
+      where: {
+        name: name,
+      },
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "phone",
+        "isPremium",
+        "roleId",
+        "experienceId",
+        "educationId",
+      ],
+    });
+    if (user === null) throw new Error("User not found");
+    res.status(201).json({ user: user, msg: "User found" });
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
 const createUser = async (req, res) => {
   const { name, email, password, phone, role } = req.body;
   try {
@@ -179,4 +204,5 @@ module.exports = {
   getUserById,
   GetAll,
   modifyUser,
+  getUserByName
 };
