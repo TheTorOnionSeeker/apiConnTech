@@ -1,7 +1,7 @@
 const { User, Role, Education, Experience } = require("../db.js");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const {ENCRYPTED_TOKEN} = process.env;
+const {CRYPTED_TOKEN} = process.env;
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -58,7 +58,7 @@ const verifyUser = async (req, res) => {
   const tokenBytes = crypto.randomBytes(32);
   const tokenSecurity = tokenBytes.toString("hex");
   const hashedToken = crypto
-    .createHmac("sha256", ENCRYPTED_TOKEN)
+    .createHmac("sha256", CRYPTED_TOKEN)
     .update(tokenSecurity)
     .digest("hex");
 
