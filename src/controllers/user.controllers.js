@@ -78,7 +78,7 @@ const createUser = async (req, res) => {
 const verifyUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const secret = crypto.randomBytes(64).toString('hex');
+  const secret = crypto.randomBytes(32).toString('hex');
 
   try {
     const user = await User.findOne({
