@@ -15,7 +15,7 @@ const PaymentIntent=async ()=>{
 }
 
 const setPremium=async ()=>{
-    const {id}=req.body;
+    const {id}=req.params;
     try {
         const user = await User.findOne({
             where: {

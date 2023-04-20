@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes/index.js");
+const { User } = require("./db.js");
 
 const stripe = require("stripe")(
   "sk_test_51Mwy6OIafxu5FBCfUflrOLZaYawloNP6Js3S76LYjloojg9K5qjMIA51Z9lowfW7IZdOcCTK9DRgvZEwtJW5Q9nY00Zca3Y2fw"
@@ -19,7 +20,8 @@ server.use(express.static("public"));
 
 const YOUR_DOMAIN = "http://localhost:5173/premium";
 
-server.post("/create-checkout-session/", async (req, res) => {
+server.post("/create-checkout-session/:name", async (req, res) => {
+  const {name}=req.params;
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -29,9 +31,17 @@ server.post("/create-checkout-session/", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
+    success_url: `${YOUR_DOMAIN}?success=true?name=${name}`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
+
+  const user = await User.findOne({
+    where: {
+      name: name,
+    }
+  });
+
+  if(session.url === `${YOUR_DOMAIN}?success=true?id=${name}`) user.isPremium=true;
 
   res.redirect(303, session.url);
 });
