@@ -1,6 +1,7 @@
 const { User, Role, Education, Experience } = require("../db.js");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const secret = crypto.randomBytes(32).toString('hex');
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -78,7 +79,6 @@ const createUser = async (req, res) => {
 const verifyUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const secret = crypto.randomBytes(32).toString('hex');
 
   try {
     const user = await User.findOne({
