@@ -1,7 +1,7 @@
 const { User, Role, Education, Experience } = require("../db.js");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const {CRYPTED_TOKEN} = process.env;
+// const jwt = require("jsonwebtoken");
+// const crypto = require("crypto");
+// const {CRYPTED_TOKEN} = process.env;
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -55,12 +55,12 @@ const verifyUser = async (req, res) => {
   const { email, password } = req.body;
 
   //creación de código único encriptado
-  const tokenBytes = crypto.randomBytes(32);
-  const tokenSecurity = tokenBytes.toString("hex");
-  const hashedToken = crypto
-    .createHmac("sha256", CRYPTED_TOKEN)
-    .update(tokenSecurity)
-    .digest("hex");
+  // const tokenBytes = crypto.randomBytes(32);
+  // const tokenSecurity = tokenBytes.toString("hex");
+  // const hashedToken = crypto
+  //   .createHmac("sha256", CRYPTED_TOKEN)
+  //   .update(tokenSecurity)
+  //   .digest("hex");
 
   try {
     const user = await User.findOne({
@@ -82,11 +82,11 @@ const verifyUser = async (req, res) => {
     if (!user) throw new Error("User not found");
 
     //se envía token de autenticación creado, con expiración de 15 min, y datos de creación
-    const tokenPayload = { userId: user.id, createdAt: Date.now() };
-    const tokenOptions = { expiresIn: "1h" };
-    const token = jwt.sign(tokenPayload, tokenOptions, hashedToken);
+    // const tokenPayload = { userId: user.id, createdAt: Date.now() };
+    // const tokenOptions = { expiresIn: "1h" };
+    // const token = jwt.sign(tokenPayload, tokenOptions, hashedToken);
 
-    res.status(201).json({ user: user, token: token, msg: "User found" });
+    res.status(201).json({ user: user, msg: "User found" });
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
