@@ -86,7 +86,7 @@ const createUserExternal = async (req, res) => {
                 email : data.email
             }
         })
-        if(exist_user) res.status(201).json({user:new_user, msg:'User created'});;
+        if(exist_user) return res.status(201).json({user:new_user, msg:'User created'});;
         const new_user = await User.create({
             name : data.givenName + ' ' + data.familyName,
             email : data.email
