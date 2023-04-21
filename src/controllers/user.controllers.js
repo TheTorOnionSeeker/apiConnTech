@@ -81,6 +81,12 @@ const createUser = async (req, res) => {
 const createUserExternal = async (req, res) => {
     const {data, role} = req.body;
     try {
+        const exist_user = await User.findOne({
+            where: {
+                email : data.email
+            }
+        })
+        if(exist_user) res.status(201).json({user:new_user, msg:'User created'});;
         const new_user = await User.create({
             name : data.givenName + ' ' + data.familyName,
             email : data.email
