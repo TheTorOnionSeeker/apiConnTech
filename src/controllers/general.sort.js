@@ -1,3 +1,5 @@
+const {Role} = require('../db.js');
+
 function ordenarObjetos(propiedad, sentido, funcionOrdenamiento) {
     let llaveOrdenamiento = funcionOrdenamiento ? 
         function(objeto) {
@@ -11,6 +13,18 @@ function ordenarObjetos(propiedad, sentido, funcionOrdenamiento) {
         return function (objeto1, objeto2) {
             return objeto1 = llaveOrdenamiento(objeto1), objeto2 = llaveOrdenamiento(objeto2), sentido * ((objeto1 > objeto2) - (objeto2 > objeto1));
         }
+}
+
+const sortRole = async (req, res) => {
+    const {array, nameRole} = req.body;
+    try {
+        array.map(async (user) => {
+            const role = await Role.findByPk(user.roleId);
+            console.log(role);
+        })
+    } catch (error) {
+        res.status(404).json({error : error.message})
+    }
 }
 
 const sortGeneral =  (req, res) =>{
@@ -39,5 +53,6 @@ const sortGeneral =  (req, res) =>{
 }
 
 module.exports = {
-    sortGeneral
+    sortGeneral,
+    sortRole
 }

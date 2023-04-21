@@ -56,6 +56,8 @@ const getUserByName = async (req, res) => {
 const createUser = async (req, res) => {
   const { name, email, password, phone, role } = req.body;
   try {
+    if(name === '' || email === '' || password === '' || phone === '' || role === '')
+            throw new Error('Error, inválido en los datos');
     const new_user = await User.create({
       name: name,
       email: email,
@@ -75,6 +77,29 @@ const createUser = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
+const createUserExternal = async (req, res) => {
+    const {data, role} = req.body;
+    try {
+        const new_user = await User.create({
+            name : data.givenName + ' ' + data.familyName,
+            email : data.email
+        })
+        if(!new_user) throw new Error('No se pudo crear el usuario');
+        const role_user = await Role.findOne({
+            where: {
+                name : role
+            }
+        })
+        if(role_user !== null) await new_user.setRole(role_user);
+        else await new_user.createRole({
+            name : role
+        });
+        res.status(201).json({user:new_user, msg:'User created'});
+    } catch (error) {
+        res.status(404).json({error : error.message});
+    } 
+}
 
 const verifyUser = async (req, res) => {
   const { email, password } = req.body;
@@ -113,17 +138,18 @@ const verifyUser = async (req, res) => {
 async function verifyToken(req, res, next) {
   try {
     const bearerHeader = req.headers["Authorization"];
-    if (typeof bearerHeader !== "undefined") {
-      const bearerToken = bearerHeader.split(" ")[1];
-      jwt.verify(bearerToken, secret, (err, authData) => {
-        if (err) {
-          res.sendStatus(403);
-        } else {
-          req.authData = authData;
-          res.status(201).send("Verificación de token exitosa");
-        }
-      });
-    }
+    res.status(201).send(bearerHeader);
+    // if (typeof bearerHeader !== "undefined") {
+    //   const bearerToken = bearerHeader.split(" ")[1];
+    //   jwt.verify(bearerToken, secret, (err, authData) => {
+    //     if (err) {
+    //       res.sendStatus(403);
+    //     } else {
+    //       req.authData = authData;
+    //       next();
+    //     }
+    //   });
+    // }
   } catch {
     res.sendStatus(401);
   }
@@ -220,5 +246,6 @@ module.exports = {
   getUserById,
   GetAll,
   modifyUser,
-  getUserByName
+  getUserByName,
+  createUserExternal
 };
