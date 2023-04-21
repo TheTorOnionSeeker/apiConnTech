@@ -18,7 +18,7 @@ server.name = "API";
 
 server.use(express.static("public"));
 
-const YOUR_DOMAIN = "https://conntech.netlify.app/premium";
+const YOUR_DOMAIN = "http://localhost:5173/premium";
 
 server.post("/create-checkout-session/:name", async (req, res) => {
   const {name}=req.params;
