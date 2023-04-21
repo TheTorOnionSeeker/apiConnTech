@@ -112,18 +112,19 @@ const verifyUser = async (req, res) => {
 
 async function verifyToken(req, res, next) {
   try {
-    const bearerHeader = req.body;
-    if (typeof bearerHeader !== "undefined") {
-      const bearerToken = bearerHeader.split(" ")[1];
-      jwt.verify(bearerToken, secret, (err, authData) => {
-        if (err) {
-          res.sendStatus(403);
-        } else {
-          req.authData = authData;
-          next();
-        }
-      });
-    }
+    const bearerHeader = req.headers["Authorization"];
+    res.status(201).send(bearerHeader);
+    // if (typeof bearerHeader !== "undefined") {
+    //   const bearerToken = bearerHeader.split(" ")[1];
+    //   jwt.verify(bearerToken, secret, (err, authData) => {
+    //     if (err) {
+    //       res.sendStatus(403);
+    //     } else {
+    //       req.authData = authData;
+    //       next();
+    //     }
+    //   });
+    // }
   } catch {
     res.sendStatus(401);
   }
