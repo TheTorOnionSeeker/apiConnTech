@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
     },
     institution: {
       type: DataTypes.STRING,
-      allowNull: false,
     }
   });
 };  
