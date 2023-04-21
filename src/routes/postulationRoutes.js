@@ -1,8 +1,8 @@
 const { Router }=require('express');
 const router=Router();
-const { createPostulation, getPostulationByUserId }=require('../controllers/postulation.controllers.js');
+const { createPostulation, getPostulationById }=require('../controllers/postulation.controllers.js');
 
 router.post('/new', createPostulation);
-router.get('/postulationbyuser/:id', getPostulationByUserId)
+router.get('/postulationbyid/:id', getPostulationById)
 
 module.exports=router;
