@@ -112,7 +112,7 @@ const verifyUser = async (req, res) => {
 
 async function verifyToken(req, res, next) {
   try {
-    const bearerHeader = req.headers["Authorization"];
+    const bearerHeader = req.body;
     if (typeof bearerHeader !== "undefined") {
       const bearerToken = bearerHeader.split(" ")[1];
       jwt.verify(bearerToken, secret, (err, authData) => {
@@ -120,7 +120,7 @@ async function verifyToken(req, res, next) {
           res.sendStatus(403);
         } else {
           req.authData = authData;
-          res.status(201).send("Verificación de token exitosa");
+          next();
         }
       });
     }
