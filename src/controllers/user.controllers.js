@@ -216,7 +216,7 @@ const modifyUser = async (req, res) => {
   }
 };
 
-const createUserExternal = async (req, res) => {
+/* const createUserExternal = async (req, res) => {
   const {data, role} = req.body;
   try {
       const new_user = await User.create({
@@ -237,7 +237,7 @@ const createUserExternal = async (req, res) => {
   } catch (error) {
       res.status(404).json({error : error.message});
   } 
-}
+} */
 
 module.exports = {
   createUser,
