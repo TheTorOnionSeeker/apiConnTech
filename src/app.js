@@ -41,7 +41,7 @@ server.post("/create-checkout-session/:name", async (req, res) => {
     }
   });
 
-  if(session.url === `${YOUR_DOMAIN}?success=true?id=${name}`) user.isPremium=true;
+  if(session.url === `${YOUR_DOMAIN}?success=true?name=${name}`) user.isPremium=true;
 
   res.redirect(303, session.url);
 });
