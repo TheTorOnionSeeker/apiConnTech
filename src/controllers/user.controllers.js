@@ -222,6 +222,29 @@ const modifyUser = async (req, res) => {
   }
 };
 
+/* const createUserExternal = async (req, res) => {
+  const {data, role} = req.body;
+  try {
+      const new_user = await User.create({
+          name : data.givenName + ' ' + data.familyName,
+          email : data.email
+      })
+      if(!new_user) throw new Error('No se pudo crear el usuario');
+      const role_user = await Role.findOne({
+          where: {
+              name : role
+          }
+      })
+      if(role_user !== null) await new_user.setRole(role_user);
+      else await new_user.createRole({
+          name : role
+      });
+      res.status(201).json({user:new_user, msg:'User created'});
+  } catch (error) {
+      res.status(404).json({error : error.message});
+  } 
+} */
+
 module.exports = {
   createUser,
   verifyUser,
