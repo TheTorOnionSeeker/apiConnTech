@@ -87,7 +87,7 @@ const createUserExternal = async (req, res) => {
             }
         })
         if(exist_user) return res.status(201).json({user:new_user, msg:'User created'});;
-        const new_user = await User.create({
+        /*const new_user = await User.create({
             name : data.givenName + ' ' + data.familyName,
             email : data.email
         })
@@ -101,7 +101,7 @@ const createUserExternal = async (req, res) => {
         else await new_user.createRole({
             name : role
         });
-        res.status(201).json({user:new_user, msg:'User created'});
+        res.status(201).json({user:new_user, msg:'User created'});*/
     } catch (error) {
         res.status(404).json({error : error.message});
     } 
