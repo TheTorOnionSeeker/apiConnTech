@@ -14,14 +14,14 @@ const createPostulation = async (req, res) => {
     }
 }
 
-const getPostulationByUserId = async (req, res) => {
+const getPostulationById = async (req, res) => {
     const {id} = req.params;
     try {
         const postulation = await Postulation.findAll({
             where:{
-                userId:id
+                vacantId:id
             },
-            attributes:["vacantId"]
+            attributes:["userId"]
         });
         if (postulation===null) throw new Error('Postulation not found');
         res.status(200).json({postulation:postulation, msg:'Postulation found'});
@@ -32,5 +32,5 @@ const getPostulationByUserId = async (req, res) => {
 
 module.exports = {
     createPostulation,
-    getPostulationByUserId
+    getPostulationById
 };

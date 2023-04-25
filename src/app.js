@@ -20,8 +20,8 @@ server.use(express.static("public"));
 
 const YOUR_DOMAIN = "http://localhost:5173/premium";
 
-server.post("/create-checkout-session/:id", async (req, res) => {
-  const {id}=req.params;
+server.post("/create-checkout-session/:name", async (req, res) => {
+  const {name}=req.params;
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -31,18 +31,19 @@ server.post("/create-checkout-session/:id", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
+    success_url: `${YOUR_DOMAIN}?success=true?name=${name}`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
 
   const user = await User.findOne({
     where: {
-      id: id,
-    },
-    attributes: ["id","name","email","phone","isPremium","roleId","experienceId","educationId"],
+      name: name,
+    }
   });
 
-  res.redirect(303, session.url).json({user:user});
+  if(session.url === `${YOUR_DOMAIN}?success=true?id=${name}`) user.isPremium=true;
+
+  res.redirect(303, session.url);
 });
 
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
